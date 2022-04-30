@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input {
+            display: block;
+        }
+        table, tr,th,td {
+            border: 1px solid black; border-collapse: collapse;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h3>ĐĂNG KÝ VIỆC LÀM</h3>
+    <form action="">
+        Tên: <input type="text" id="ten">
+        Tuổi: <input type="number"  id="tuoi">
+        Giới tính: <input type="text"  id="gioitinh">
+        Năm Sinh: <input type="date"  id="namsinh">
+        Giờ bắt đầu: <input type="text"  id="batdau">
+        Giờ kết thúc: <input type="text"  id="ketthuc">
+    </form>
+    <button id="add">ADD</button>
+    <table id="table">
+        <thead>
+            <tr id="tr0">
+                <td>tên</td>
+                <td>tuổi</td>
+                <td>giới tính</td>
+                <td>năm sinh</td>
+                <td>giờ bắt đầu</td>
+                <td>giờ kết thúc</td>
+                <td>Tổng giờ làm</td>
+            </tr>
+        </thead>
+        <tbody id="bangdangky">
+            <!-- <tr id="tr1">
+                <td>1</td>
+                <td>anh</td>
+                <td>21</td>
+                <td>nam</td>
+                <td>1997</td>
+                <td>7</td>
+                <td>17</td>
+                <td>10</td>
+                <td>
+                    <button>Sua</button>
+                    <button>XOA</button>
+                </td>
+            </tr> 
+            <tr id="tr2">
+                <td>2</td>
+                <td>ngan</td>
+                <td>18</td>
+                <td>nu</td>
+                <td>2004</td>
+                <td>9</td>
+                <td>19</td>
+                <td>10</td>
+                <td>
+                    <button>Sua</button>
+                    <button>XOA</button>
+                </td>
+            </tr><tr id="tr3">
+                <td>3</td>
+                <td>duc</td>
+                <td>20</td>
+                <td>nam</td>
+                <td>1998</td>
+                <td>3</td>
+                <td>19</td>
+                <td>16</td>
+                <td>
+                    <button>Sua</button>
+                    <button>XOA</button>
+                </td>
+            </tr>
+            </tr><tr id="tr4">
+                <td>4</td>
+                <td>Phuong</td>
+                <td>32</td>
+                <td>nu</td>
+                <td>1990</td>
+                <td>5</td>
+                <td>20</td>
+                <td>15</td>
+                <td>
+                    <button>Sua</button>
+                    <button>XOA</button>
+                </td>
+            </tr> -->
+        </tbody>
+        </table>
+        <h3 id="timeWork"></h3>
+        <h3 id="congnhan"></h3>
+        <h3 id="tongtienluong"></h3>
+        <h3 id="giolamcuaNu"></h3>
+        <h3 id="tongluongNu"></h3>
+        <h3 id="phantramNusovoiNam"></h3>
+    </body>
+<script>
+var addBtn = document.getElementById("add");
+addBtn.addEventListener('click',() => {
+    var ten = document.getElementById("ten").value;
+    var tuoi = document.getElementById("tuoi").value;
+    var gioitinh = document.getElementById("gioitinh").value;
+    var namsinh = document.getElementById("namsinh").value;
+    var batdau = document.getElementById("batdau").value;
+    var ketthuc = document.getElementById("ketthuc").value;
+    var tonggiolam = ketthuc - batdau;
+        document.getElementById("bangdangky").innerHTML += 
+            `<tr>
+                <td>${ten}</td>
+                <td>${tuoi}</td>
+                <td>${gioitinh}</td>
+                <td>${namsinh}</td>
+                <td>${batdau}</td>
+                <td>${ketthuc}</td>
+                <td>${tonggiolam}</td>
+                <td>
+                    <button onclick='deleteBtn(this)'>XOA</button>
+                    <button onclick='suaBtn(this)'>Sua</button>
+                    <button onclick='donebtn(this)'>DONE</button>
+                </td>
+            </tr>`
+            var tr = document.querySelectorAll('tr');
+            var sumGiolam = 0;
+            var sumgiolamNu =0;
+            var timeWork = document.getElementById('timeWork');
+            var giolamcuaNu = document.getElementById('giolamcuaNu');
+            var congnhan = document.getElementById('congnhan');
+            for (var i =1; i< tr.length; i++) {
+                var arr_row = tr[i].querySelectorAll('td')
+                for (var j = 0; j < 1; j++) {
+                    sumGiolam += parseInt(arr_row[6].innerHTML)
+                    if (arr_row[2].innerHTML == "nu") {
+                        sumgiolamNu += parseInt(arr_row[6].innerHTML) 
+                    }
+                }
+            }
+            //Tong gio lam tat ca cong nhan
+            timeWork.innerHTML 
+            = "Tong gio lam tat ca cong nhan la : " + sumGiolam +" "+ "gio";
+            //Tat ca cong nhan lam
+            var nguoi = tr.length-1;
+            congnhan.innerHTML 
+            = "Tat ca cong nhan lam la : " + nguoi +" "+ "nguoi";
+            //Tong tien luong phai tra
+            var tongluong = sumGiolam * 50000
+            tongtienluong.innerHTML
+             = "Tong tien luong phai tra la : " + tongluong +" "+ "VND";
+            //Tong gio lam cua Nu~
+            giolamcuaNu.innerHTML 
+            = "Tong gio lam cua Nu~ la :" + sumgiolamNu +" "+ "gio";
+            //Tong tien luong cua Nu
+            var tongtienluongNu = sumgiolamNu * 50000
+            tongluongNu.innerHTML
+            = "Tong tien luong cua Nu la :" + tongtienluongNu + " "+ "VND";
+            //% tien luong cua Nu so voi Nam
+            var phantramNuvsNam = tongtienluongNu * 100 / tongluong;
+            phantramNusovoiNam.innerHTML 
+            = "% tien luong cua Nu so voi Nam : " + phantramNuvsNam + "%";
+            
+            
+        })
+        function deleteBtn(r) {
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById("table").deleteRow(i);
+        }
+        function suaBtn () {
+        for(var i = 1 ; i < table.rows.length; i++)
+                {
+                    table.rows[i].onclick = function()
+                    {
+                      rIndex = this.rowIndex;
+                      document.getElementById("ten").value = this.cells[0].innerHTML;
+                      document.getElementById("tuoi").value = this.cells[1].innerHTML;
+                      document.getElementById("gioitinh").value = this.cells[2].innerHTML;
+                      document.getElementById("namsinh").value = this.cells[3].innerHTML;
+                      document.getElementById("batdau").value = this.cells[4].innerHTML;
+                      document.getElementById("ketthuc").value = this.cells[5].innerHTML;
+                    };
+                }
+        }
+        function donebtn (r) {
+            var ten = document.getElementById('ten').value;
+            var tuoi = document.getElementById('tuoi').value;
+            var gioitinh = document.getElementById('gioitinh').value;
+            var namsinh = document.getElementById('namsinh').value;
+            var batdau = document.getElementById('batdau').value ; 
+            var ketthuc = document.getElementById('ketthuc').value;
+            var tonggiolam = ketthuc - batdau;
+            var i = r.parentNode.parentNode.rowIndex;
+            document.getElementById("table").deleteRow(i);
+            document.getElementById("bangdangky").innerHTML += 
+                    `<tr>
+                        <td>${ten}</td>
+                        <td>${tuoi}</td>
+                        <td>${gioitinh}</td>
+                        <td>${namsinh}</td>
+                        <td>${batdau}</td>
+                        <td>${ketthuc}</td>
+                        <td>${tonggiolam}</td>
+                        <td>
+                            <button onclick='deleteBtn(this)'>XOA</button>
+                            <button onclick='suaBtn(this)'>Sua</button>
+                            <button onclick='donebtn(this)'>DONE</button>
+                        </td>
+                    </tr>`  
+        }
+</script> 
+</html>
